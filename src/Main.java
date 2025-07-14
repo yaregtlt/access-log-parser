@@ -1,24 +1,11 @@
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int count = 0;
-        while (true){
-            System.out.println("Введи путь к файлу: ");
-            String path = new Scanner(System.in).nextLine();
-            File file = new File(path);
-            boolean fileExists = file.exists();
-            boolean isDerectory = file.isDirectory();
-            if (!fileExists || !isDerectory) System.out.println("Указанный файл не существует или указан путь к папке, а не файлу");
-            if (fileExists) {
-                System.out.println("Путь указан верно");
-                count++;
-                System.out.println("Это файл номер " + count);
-            }
-        }
         //System.out.println(fraction(278.46785646548999));
         //System.out.println(sumLastNums(4568));
         //System.out.println(charToNum('1'));
@@ -51,6 +38,28 @@ public class Main {
         //leftTriangle(10);
         //rightTriangle(5);
         //guessGame();
+        //int[] array1 = {5,-8,9,5,-18,5,-4};
+        //int[] array2 = {11,12,13};
+        //System.out.println(countPositive(array));
+        //System.out.println(Arrays.toString(add(array1,array2,5)));
+        //System.out.println(java.util.Arrays.toString(array));
+        //System.out.println(5%2);
+//        int a = new int[3][14].length;
+//        String s1 = "Hello world!";
+//        String s2 = "Hello world!";
+//        String s3 = "Hello" + " world!";
+//        String s4 = new String("Hello world!");
+//        String s5 = new String(new char[]{'H','e','l','l','o',' ','w','o','r','l','d','!'});
+//        String s6 = new String(s3);
+//        String s7 = new String(s3).intern();
+//        System.out.println(s1 == s2);
+//        System.out.println(s1 == s3);
+//        System.out.println(s1 == s4);
+//        System.out.println(s1 == s5);
+//        System.out.println(s1 == s6);
+//        System.out.println(s1 == s7);
+        char c = 6;
+        System.out.println("Hello".charAt(c));
 
                 }
     public static int lastNumSum(int a, int b){
@@ -93,7 +102,7 @@ public class Main {
         return a == b && b == c;
     }
 
-// Упражнения на условия
+// ----------------------------Условия----------------------------
     public static int abs(int x){
          return x>0?x:x*-1;
     }
@@ -177,7 +186,7 @@ public class Main {
         }
     }
 
-    //Циклы
+    //----------------------------Циклы----------------------------
     public static String listNums(int x){
         String numbers = "0";
         for (int i=1; i<=x; i++) {
@@ -265,4 +274,122 @@ public class Main {
         
     }
 
+    //----------------------------Массивы------------------------------
+    public static int findFirst(int[] arr, int x){
+        for (int i = 0; i< arr.length;i++){
+            if (arr[i] == x) return i;
+        }
+        return -1;
+    }
+    public static int findLast(int[] arr, int x){
+        for (int i = arr.length-1; i>=0;i--){
+            if (arr[i] == x) return i;
+        }
+        return -1;
+    }
+    public static int maxAbs(int[] arr){
+        int max = 0;
+        for (int i = 0; i< arr.length;i++){
+           if (Math.abs(arr[i])>Math.abs(max)) max=arr[i];
+        }
+        return max;
+    }
+    public static int countPositive(int[] arr){
+        int count = 0;
+        for (int i = 0; i< arr.length;i++){
+            if (arr[i]>0) count++;
+        }
+        return count;
+    }
+    public static boolean palindrom(int[] arr){
+        //if (arr.length%2==0) return false;
+        int first = 0;
+        int last = arr.length - 1;
+
+        while (first < last) {
+            if (arr[first] != arr[last]) {
+                return false;
+            }
+            first++;
+            last--;
+        }
+        return true;
+    }
+    public static void reverse(int[] arr){
+        for (int i = 0; i < arr.length / 2; i++) {
+            int temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1 - i] = temp;
+        }
+    }
+    public static int[] reverseBack(int[] arr){
+        int[] tmp = new int[arr.length];
+        for (int i = 0; i < arr.length / 2; i++) {
+            tmp[i] = arr[arr.length - 1 - i];
+        }
+        return tmp;
+    }
+    public static int[] concat(int[] arr1, int[] arr2){
+        int[] newArr = new int[arr1.length + arr2.length];
+        for (int i = 0; i < arr1.length; i++) {
+            newArr[i] = arr1[i];
+        }
+       for (int j = 0; j < arr2.length; j++) {
+            newArr[j + arr1.length] = arr2[j];
+        }
+        return newArr;
+    }
+    public static int[] findAll(int[] arr, int x){
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == x) {
+                count++;
+            }
+        }
+        int[] result = new int[count];
+        int pos = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == x) {
+                result[pos++] = i;
+            }
+        }
+        return result;
+    }
+    public static int[] deleteNegative(int[] arr){
+        int count = countPositive(arr);
+        int[] result = new int[count];
+        int pos = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) {
+                result[pos++] = arr[i];
+            }
+        }
+        return result;
+    }
+    public static int[] add(int[] arr, int x, int pos){
+        int[] result = new int[arr.length+1];
+        int count=0;
+        for (int i = 0; i < arr.length; i++) {
+            if (i == pos) {
+                result[count] = x;
+                count=i+1;
+            }
+            result[count] = arr[i];
+            count++;
+        }
+        return result;
+    }
+    public static int[] add(int[] arr, int[] ins, int pos){
+        int[] result = new int[arr.length+ ins.length];
+        for (int i = 0; i < pos; i++) {
+            result[i] = arr[i];
+        }
+        for (int j = 0; j < ins.length; j++) {
+            result[pos + j] = ins[j];
+        }
+        for (int k = pos; k < arr.length; k++) {
+            result[k + ins.length] = arr[k];
+        }
+        return result;
+    }
 }
