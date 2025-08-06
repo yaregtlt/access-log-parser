@@ -1,3 +1,5 @@
+package ru.сourses.crm;
+
 public class Employee {
     private final String name;
     private Department department;

@@ -1,3 +1,5 @@
+package ru.сourses.geometry;
+
 public class Square {
     Point point;
     int sideLength;

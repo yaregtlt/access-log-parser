@@ -1,3 +1,5 @@
+package ru.сourses.school;
+
 import java.util.Arrays;
 
 public class Student {

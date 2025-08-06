@@ -1,3 +1,5 @@
+package ru.сourses.crm;
+
 import java.util.Objects;
 
 public class Department {

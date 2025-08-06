@@ -1,3 +1,5 @@
+package ru.сourses.navigation;
+
 import java.util.ArrayList;
 import java.util.List;
 

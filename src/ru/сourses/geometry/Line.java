@@ -1,4 +1,6 @@
-public class Line {
+package ru.сourses.geometry;
+
+public class Line implements IMeasurable {
     Point start;
     Point end;
 

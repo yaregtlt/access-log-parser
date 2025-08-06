@@ -1,3 +1,5 @@
+package ru.сourses.navigation;
+
 public class Trail {
     City toCity;
     int cost;
