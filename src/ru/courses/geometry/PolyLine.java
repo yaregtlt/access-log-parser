@@ -1,7 +1,8 @@
-package ru.сourses.geometry;
+package ru.courses.geometry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PolyLine implements IMeasurable {
     List<Point> polyLinePoint;
@@ -35,6 +36,21 @@ public class PolyLine implements IMeasurable {
             previousPoint = current;
         }
         return length;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        PolyLine polyLine = (PolyLine) o;
+        for (int i = 0; i<polyLinePoint.size(); i++) {
+            if (polyLinePoint.get(i).equals(polyLine.polyLinePoint.get(i))) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(polyLinePoint);
     }
 
     @Override

@@ -1,22 +1,22 @@
-package ru.сourses.crm;
+package ru.courses.crm;
 
 public class Employee {
     private final String name;
     private Department department;
 
-    public Employee(String name) {
+    Employee(String name) {
         this.name = name;
     }
 
-    public void setDepartment(Department department) {
+    void setDepartment(Department department) {
         this.department = department;
     }
 
-    public Department getDepartment() {
+    Department getDepartment() {
         return department;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -30,7 +30,7 @@ public class Employee {
         }
     }
 
-    private boolean isHead() {
+    boolean isHead() {
         return department != null && department.getHead() == this;
     }
 }

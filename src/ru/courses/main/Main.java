@@ -1,7 +1,26 @@
-package ru.сourses.main;
+package ru.courses.main;
+
+import ru.courses.food.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Sauce s1 = new Sauce("Кетчуп",Spiciness.NOT_SPICY);
+        System.out.println(s1);
+//        Line l1 = new Line(4,5,8,8);
+//        Line l2 = l1.copy();
+//        System.out.println(l1.equals(l2));
+//        System.out.println(l2.equals(l1));
+//        Point p1 = new Point(4,5);
+//        Point p2 = p1.copy();
+//        System.out.println(p1.equals(p2));
+//        System.out.println(p2.equals(p1));
+//        Fraction f1 = new Fraction(3,9);
+//        Fraction f2 = f1.copy();
+//        System.out.println(f1.equals(f2));
+//        Point p1 = new Point(1,5);
+//        ru.courses.geometry.Point p2 = new ru.courses.geometry.Point(4,8);
+//        System.out.println(p1);
+//        System.out.println(p2);
 //        Fraction f1 = new Fraction(1,3);
 //        System.out.println(f1);
 //        Fraction f2 = new Fraction(2,5);
@@ -39,6 +58,7 @@ public class Main {
 //        measurables.add(closedPolyLine);
 //        System.out.println(countLength(measurables));
 //        System.out.println(sumAll(2,new Fraction(3,5), 2.3));
+
     }
 
 //    public static double sumAll(Fraction... fractions){

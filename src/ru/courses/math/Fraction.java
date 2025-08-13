@@ -1,6 +1,8 @@
-package ru.сourses.math;
+package ru.courses.math;
 
-public class Fraction extends Number{
+import java.util.Objects;
+
+public class Fraction extends Number implements Cloneable{
     private final int numerator;
     private final int denominator;
 
@@ -75,4 +77,32 @@ public class Fraction extends Number{
     public byte byteValue() {
         return (byte)(numerator / denominator);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Fraction fraction = (Fraction) o;
+        return numerator == fraction.numerator && denominator == fraction.denominator;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numerator, denominator);
+    }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+    public Fraction copy() {
+        try {
+            return (Fraction) clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Ошибка клонирования.", e);
+        }
+    }
+
 }

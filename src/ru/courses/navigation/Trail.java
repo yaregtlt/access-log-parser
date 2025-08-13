@@ -1,4 +1,4 @@
-package ru.сourses.navigation;
+package ru.courses.navigation;
 
 public class Trail {
     City toCity;

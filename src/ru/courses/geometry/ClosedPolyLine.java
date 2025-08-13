@@ -1,4 +1,4 @@
-package ru.сourses.geometry;
+package ru.courses.geometry;
 import java.util.List;
 
 public class ClosedPolyLine extends PolyLine{

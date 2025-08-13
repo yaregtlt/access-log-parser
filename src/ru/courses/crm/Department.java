@@ -1,4 +1,4 @@
-package ru.сourses.crm;
+package ru.courses.crm;
 
 import java.util.Objects;
 
@@ -6,19 +6,19 @@ public class Department {
     private final String title;
     private Employee head;
 
-    public Department(String title) {
+    Department(String title) {
         this.title = title;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public Employee getHead() {
+    Employee getHead() {
         return head;
     }
 
-    public void setHead(Employee employee) throws IllegalStateException {
+    void setHead(Employee employee) throws IllegalStateException {
         Objects.requireNonNull(employee, "Начальник отдела не может быть пустым.");
         if (!employee.getDepartment().equals(this)) {
             throw new IllegalStateException("Руководитель отдела обязан работать в своём отделе.");

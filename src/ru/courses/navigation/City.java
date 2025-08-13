@@ -1,4 +1,4 @@
-package ru.сourses.navigation;
+package ru.courses.navigation;
 
 import java.util.ArrayList;
 import java.util.List;
