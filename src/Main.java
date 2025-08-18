@@ -33,8 +33,8 @@ public class Main {
                     if (length<minLength) minLength=length;
                 }
             }
-            catch (IOException e) {
-                throw new InputOutputException(e);
+            catch (Exception ex) {
+                ex.printStackTrace();
             }
             System.out.println("Общее количество строк: " + countLines + "\nСамая длинная строка: " + maxLength + " символов" + "\nСамая короткая строка:" + minLength + " символов");
         }
