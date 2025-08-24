@@ -1,3 +1,5 @@
+package ru.study;
+
 import java.io.FileNotFoundException;
 
 public class FileNotFound extends FileNotFoundException{

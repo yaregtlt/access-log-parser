@@ -1,5 +1,8 @@
+package ru.study;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +18,8 @@ public class LogEntry {
 
     public LogEntry(String logLine) {
         String[] stringsSpace = logLine.split(" ");
-        String[] stringsQuotes = logLine.split("([^\"]*)\"");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String[] stringsQuotes = logLine.split("\"");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ss", Locale.US);
         this.ipAddr = stringsSpace[0];
         this.time = LocalDateTime.parse(stringsSpace[3].replace("[",""), formatter);
         this.method = HttpMethod.valueOf(stringsSpace[5].replace("\"",""));

@@ -1,3 +1,5 @@
+package ru.study;
+
 import java.io.IOException;
 
 public class InputOutputException extends IOException {

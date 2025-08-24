@@ -1,3 +1,5 @@
+package ru.study;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -28,15 +30,20 @@ public class Main {
             }
             try (FileReader fileReader = new FileReader(path);
                  BufferedReader reader = new BufferedReader(fileReader)){
-
+                int count1 = 0;
                 while ((line = reader.readLine()) != null) {
+                //for (int i = 1; i < 10; i++) {
+                    count1 ++;
+                    //System.out.println("String number: " + count1);
                     countLines++;
                     int length = line.length();
                     if (length>maxLength) maxLength=length;
                     if (maxLength>1024) throw new LineTooLongException();
                     if (length<minLength) minLength=length;
-                    //String fragment1 = patternFinder("([^\"]*)\"", line, 5);
                     try {
+                        //line = "190.136.46.196 - - [25/Sep/2022:06:25:04 +0300] \"GET /december-reports/analysis/6367/65/?n=11 HTTP/1.0\" 200 8680 \"-\" \"Mozilla/5.0 (compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html)\"";
+                        //LogEntry le = new LogEntry(line);
+                        //System.out.println(le.getAgent());
                         String lookingFragment = "";
                         String fragment = patternFinder("([^(]*)\\)", patternFinder("([^\"]*)\"", line, 5), 0);
                         String[] parts = fragment.split(";");
@@ -46,6 +53,7 @@ public class Main {
                         String finalFragment = patternFinder(lookingFragment, '/');
                         if (finalFragment.equals("Googlebot")) googleCount++;
                         if (finalFragment.equals("YandexBot")) yandexCount++;
+
                     }
                     catch (IllegalStateException ignored){
                     }

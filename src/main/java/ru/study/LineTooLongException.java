@@ -1,3 +1,5 @@
+package ru.study;
+
 public class LineTooLongException extends RuntimeException {
     public LineTooLongException() {
     }
