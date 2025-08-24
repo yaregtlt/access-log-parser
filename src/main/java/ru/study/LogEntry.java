@@ -3,8 +3,6 @@ package ru.study;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LogEntry {
     private final String ipAddr;
@@ -39,20 +37,11 @@ public class LogEntry {
     public String getReferer() {return referer;}
     public UserAgent getAgent() {return agent;}
 
-    static String patternFinder(String patternString, String line, int fragmentNumber) {
-        Pattern pattern = Pattern.compile(patternString);
-        Matcher matcher = pattern.matcher(line);
-        int countFragment = 0;
-        while(matcher.find()) {
-            if(countFragment++ == fragmentNumber) {
-                break;
-            }
-        }
-        return matcher.group(1);
-    }
-    static String splitter(String line, String pattern, int index){
-        String[] strings = line.split(pattern);
-        return strings[index];
+    public boolean isErrorStatusCode() {
+        if (this.responseCode < 3) return false;
+        String str = String.valueOf(this.responseCode);
+        char firstChar = str.charAt(0);
+        return firstChar == '4' || firstChar == '5';
     }
 
 }

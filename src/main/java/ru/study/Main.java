@@ -39,19 +39,10 @@ public class Main {
                     if (maxLength>1024) throw new LineTooLongException();
                     if (length<minLength) minLength=length;
                     try {
-                        //line = "190.136.46.196 - - [25/Sep/2022:06:25:04 +0300] \"GET /december-reports/analysis/6367/65/?n=11 HTTP/1.0\" 200 8680 \"-\" \"Mozilla/5.0 (compatible; SemrushBot/7~bl; +http://www.semrush.com/bot.html)\"";
-                        LogEntry le = new LogEntry(line);
-                        //System.out.println("Browser is: " + le.getAgent().getBrowser() + "; OS type is: " + le.getAgent().getOsType());
-                        String lookingFragment = "";
-                        String fragment = patternFinder("([^(]*)\\)", patternFinder("([^\"]*)\"", line, 5), 0);
-                        String[] parts = fragment.split(";");
-                        if (parts.length >= 2) {
-                            lookingFragment = parts[1];
-                        }
-                        String finalFragment = patternFinder(lookingFragment, '/');
-                        if (finalFragment.equals("Googlebot")) googleCount++;
-                        if (finalFragment.equals("YandexBot")) yandexCount++;
-                        statistics.addEntry(le);
+                        LogEntry logEntry = new LogEntry(line);
+                        if (logEntry.getAgent().isGooglebot()) googleCount++;
+                        if (logEntry.getAgent().isYandexBot()) yandexCount++;
+                        statistics.addEntry(logEntry);
                     }
                     catch (IllegalStateException ignored){
                     }
@@ -67,30 +58,13 @@ public class Main {
                     "\nYandexBot caught: " + yandexCount + " times" +
                     "\nYandexBot is: " + String.format("%.2f", (double) yandexCount/countLines*100) + " % from whole number of strings" +
                     "\nGooglebot is: " + String.format("%.2f", (double) googleCount/countLines*100) + " % from whole number of strings");
+            System.out.println("Traffic rate is: " + statistics.getTrafficRate());
             System.out.println("OS statistics is: " + statistics.getOsStatistics());
             System.out.println("OS statistics is: " + statistics.getBrowserStatistics());
+            System.out.println("Average number of requests per hour: " + statistics.getAverageRequestsPerHour());
+            System.out.println("Average number of error requests per hour: " + statistics.getAverageErrorRequestsPerHour());
+            System.out.println("Average number of requests per user: " + statistics.getAverageRequestsPerUser());
         }
 
-        }
-        public static String patternFinder(String patternString, String line, int fragmentNumber) {
-
-            Pattern pattern = Pattern.compile(patternString);
-            Matcher matcher = pattern.matcher(line);
-            int countFragment = 0;
-            while(matcher.find()) {
-                if(countFragment++ == fragmentNumber) {
-                    break;
-                }
-            }
-            return matcher.group(1);
-        }
-        public static String patternFinder(String line, char delimiter) {
-            String newLine = line.replaceAll(" ", "");
-            int index = newLine.indexOf(delimiter);
-            if (index != -1) {
-                return newLine.substring(0, index);
-            } else {
-                return newLine;
-            }
         }
     }
