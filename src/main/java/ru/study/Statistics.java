@@ -48,6 +48,7 @@ public class Statistics {
         return ((double)this.totalTraffic / hoursDifference);
     }
 
+
     public HashMap<String, Double> getOsStatistics() {
         HashMap<String, Double> statistics = new HashMap<>();
         if (totalEntries == 0) {
@@ -79,6 +80,14 @@ public class Statistics {
     private long timePeriod(){
         if (this.minTime == null || this.maxTime == null) return 0;
         return Duration.between(maxTime, minTime).toHours();
+    }
+
+    public HashSet<String> getUrls200() {
+        return urls200;
+    }
+
+    public HashSet<String> getUrls404() {
+        return urls404;
     }
 
     public double getAverageRequestsPerHour() {
