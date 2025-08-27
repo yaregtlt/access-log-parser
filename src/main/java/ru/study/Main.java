@@ -64,6 +64,8 @@ public class Main {
             System.out.println("Average number of requests per hour: " + statistics.getAverageRequestsPerHour());
             System.out.println("Average number of error requests per hour: " + statistics.getAverageErrorRequestsPerHour());
             System.out.println("Average number of requests per user: " + statistics.getAverageRequestsPerUser());
+            System.out.println("Max requests per second: " + statistics.maxVisitsInOneSecond());
+            System.out.println("Max visits by user: " + statistics.maxUniqueVisits());
         }
 
         }

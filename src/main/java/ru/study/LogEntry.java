@@ -43,4 +43,6 @@ public class LogEntry {
         return firstChar == '4' || firstChar == '5';
     }
 
+
+
 }

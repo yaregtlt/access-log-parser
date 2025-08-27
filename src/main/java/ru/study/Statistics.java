@@ -2,10 +2,13 @@ package ru.study;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Statistics {
     private int totalTraffic = 0;
@@ -13,12 +16,16 @@ public class Statistics {
     private LocalDateTime maxTime = null;
     private final HashSet<String> urls200 = new HashSet<>();
     private final HashSet<String> urls404 = new HashSet<>();
-    private HashMap<String, Integer> countOs = new HashMap<>();
-    private HashMap<String, Integer> countBrowser = new HashMap<>();
+    private final HashMap<String, Integer> countOs = new HashMap<>();
+    private final HashMap<String, Integer> countBrowser = new HashMap<>();
     private int totalEntries = 0;
     private int totalVisits = 0;
     private int errorRequests = 0;
-    private HashSet<String> uniqueIPs = new HashSet<>();
+    private final HashSet<String> uniqueIPs = new HashSet<>();
+    private final HashSet<String> refererDomain = new HashSet<>();
+    private HashMap<Integer, Integer> visitsPerSecond = new HashMap<>();
+    private boolean isNotBot=false;
+    private HashMap<String, Integer> maxVisits = new HashMap<>();
 
 
     public Statistics() {}
@@ -38,7 +45,24 @@ public class Statistics {
         this.totalEntries++;
         if (!entry.getAgent().isBot()) this.totalVisits ++;
         if (entry.isErrorStatusCode()) this.errorRequests ++;
-        uniqueIPs.add(entry.getIpAddr());
+        this.uniqueIPs.add(entry.getIpAddr());
+        this.refererDomain.add(extractDomain(entry.getReferer()));
+        if (!entry.getAgent().isBot()) this.isNotBot=true;
+        this.visitsPerSecond = addVisitPerSecond(entry);
+        this.maxVisits = addUser(entry);
+    }
+
+    public static long toSeconds(LocalDateTime time) {
+        return time.toEpochSecond(ZoneOffset.UTC);
+    }
+
+    private static String extractDomain(String referer) {
+        Pattern pattern = Pattern.compile("(https?://)?(www\\.)?(([\\da-z.-]+)\\.([a-z.]{2,6}))([/\\w.-]*)");
+        Matcher matcher = pattern.matcher(referer);
+        if (matcher.find()) {
+            return matcher.group(3); // Группа 3 содержит доменное имя
+        }
+        return null;
     }
 
     public double getTrafficRate() {
@@ -77,21 +101,21 @@ public class Statistics {
         return statistics;
     }
 
-    private long timePeriod(){
+    private long timePeriodHours(){
         if (this.minTime == null || this.maxTime == null) return 0;
         return Duration.between(maxTime, minTime).toHours();
     }
 
     public HashSet<String> getUrls200() {
-        return urls200;
+        return this.urls200;
     }
 
     public HashSet<String> getUrls404() {
-        return urls404;
+        return this.urls404;
     }
 
     public double getAverageRequestsPerHour() {
-        long timeRange = timePeriod();
+        long timeRange = timePeriodHours();
         if (timeRange == 0) {
             return totalVisits;
         }
@@ -99,7 +123,7 @@ public class Statistics {
     }
 
     public double getAverageErrorRequestsPerHour() {
-        long timeRange = timePeriod();
+        long timeRange = timePeriodHours();
         if (timeRange == 0) {
             return errorRequests;
         }
@@ -111,6 +135,39 @@ public class Statistics {
             return 0.0;
         }
         return (double) totalVisits / uniqueIPs.size();
+    }
+
+    public HashSet<String> getRefererDomain() {
+        return this.refererDomain;
+    }
+
+    private HashMap<Integer, Integer> addVisitPerSecond(LogEntry request) {
+        HashMap<Integer, Integer> visitsPerSecond = new HashMap<>();
+        if (this.isNotBot) {
+            long second = toSeconds(request.getTime());
+            visitsPerSecond.put((int) second, visitsPerSecond.getOrDefault((int) second, 0) + 1);
+        }
+        return visitsPerSecond;
+    }
+
+    public int maxVisitsInOneSecond() {
+        return this.visitsPerSecond.values().stream()
+                .max(Integer::compareTo)
+                .orElse(0);
+    }
+
+    private HashMap<String, Integer> addUser(LogEntry request) {
+        HashMap<String, Integer> uniqueUser = new HashMap<>();
+        if (this.isNotBot) {
+            uniqueUser.put(request.getIpAddr(), uniqueUser.getOrDefault(request.getIpAddr(), 0) + 1);
+        }
+        return uniqueUser;
+    }
+
+    public int maxUniqueVisits() {
+        return this.maxVisits.values().stream()
+                .max(Integer::compareTo)
+                .orElse(0);
     }
 
 }
