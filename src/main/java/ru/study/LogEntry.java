@@ -38,7 +38,6 @@ public class LogEntry {
     public UserAgent getAgent() {return agent;}
 
     public boolean isErrorStatusCode() {
-        if (this.responseCode < 3) return false;
         String str = String.valueOf(this.responseCode);
         char firstChar = str.charAt(0);
         return firstChar == '4' || firstChar == '5';
